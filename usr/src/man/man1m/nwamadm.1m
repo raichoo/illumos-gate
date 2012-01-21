@@ -1,0 +1,119 @@
+.TH nwamadm 1M "Last change: 16 Jan 2012"
+.SH NAME
+nwamadm \- interact with nwamd(1M)
+.SH SYNOPSIS
+.LP
+.nf
+\fBnwamadm\fR help
+.fi
+
+.LP
+.nf
+\fBnwamadm\fR enable [\fB\-p\fR \fIprofile\-type\fR] [\fB\-c\fR \fIncu\-class\fR] \fIobject\-name\fR
+.fi
+
+.LP
+.nf
+\fBnwamadm\fR disable [\fB\-p\fR \fIprofile\-type\fR] [\fB\-c\fR \fIncu\-class\fR] \fIobject\-name\fR
+.fi
+
+.LP
+.nf
+\fBnwamadm\fR list [\fB\-x\fR] [\fB\-p\fR \fIprofile\-type\fR] [\fB\-c\fR \fIncu\-class\fR] [\fIobject\-name\fR]
+.fi
+
+.LP
+.nf
+\fBnwamadm\fR show\-events
+.fi
+
+.LP
+.nf
+\fBnwamadm\fR scan\-wifi \fIwifi\-link\fR
+.fi
+
+.LP
+.nf
+\fBnwamadm\fR select\-wifi \fIwifi\-link\fR
+.fi
+
+.SH DESCRIPTION
+\fBnwamadm\fR
+
+.SH SUBCOMMANDS
+.sp
+.ne 2
+.na
+\fBhelp\fR
+.ad
+.sp .6
+.RS 4n
+Display a help message.
+.RE
+
+.sp
+.ne 2
+.na
+\fBnwamadm\fR enable [\fB\-p\fR \fIprofile\-type\fR] [\fB\-c\fR \fIncu\-class\fR] \fIobject\-name\fR
+.ad
+.sp .6
+.RS 4n
+Enable profile.
+.RE
+
+.sp
+.ne 2
+.na
+\fBnwamadm\fR disable [\fB\-p\fR \fIprofile\-type\fR] [\fB\-c\fR \fIncu\-class\fR] \fIobject\-name\fR
+.ad
+.sp .6
+.RS 4n
+Disable profile.
+.RE
+
+.sp
+.ne 2
+.na
+\fBnwamadm\fR list [\fB\-x\fR] [\fB\-p\fR \fIprofile\-type\fR] [\fB\-c\fR \fIncu\-class\fR] [\fIobject\-name\fR]
+.ad
+.sp .6
+.RS 4n
+List profiles.
+.RE
+
+.sp
+.ne 2
+.na
+\fBshow\-events\fR
+.ad
+.sp .6
+.RS 4n
+Shows NWAM events as they happen, such as state changes of interfaces and reports of periodic wifi scans.
+.RE
+
+.sp
+.ne 2
+.na
+\fBscan\-wifi\fR \fIwifi\-link\fR
+.ad
+.sp .6
+.RS 4n
+Issues a scan for \fBWiFi\fR networks on the specified \fIwifi\-link\fR
+.RE
+
+.sp
+.ne 2
+.na
+\fBselect\-wifi\fR \fIwifi\-link\fR
+.ad
+.sp .6
+.RS 4n
+Presents a list of **WiFi** networks in sight for the user to choose from.
+.RE
+
+.SH "EXAMPLES"
+\fBExample 1\fR Show NWAM Events
+.P
+The following command shows NWAM events as they happen.
+.P
+  \fB# nwamadm show\-events\fR
