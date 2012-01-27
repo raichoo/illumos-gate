@@ -294,7 +294,7 @@ again:
 static void drm_mode_object_put(struct drm_device *dev,
 		                struct drm_mode_object *object)
 {
-        mutex_enter(&dev->mode_config.idr_mutex);
+	mutex_enter(&dev->mode_config.idr_mutex);
 	//TODO
 	//idr_remove(&dev->mode_config.crtc_idr, object->id);
 	mutex_exit(&dev->mode_config.idr_mutex);
@@ -397,10 +397,10 @@ void drm_framebuffer_cleanup(struct drm_framebuffer *fb)
 void drm_crtc_init(struct drm_device *dev, struct drm_crtc *crtc,
 		   const struct drm_crtc_funcs *funcs)
 {
-        crtc->dev = dev;
-        crtc->funcs = funcs;
+	crtc->dev = dev;
+	crtc->funcs = funcs;
 
-        mutex_enter(&dev->mode_config.mutex);
+	mutex_enter(&dev->mode_config.mutex);
 	drm_mode_object_get(dev, &crtc->base, DRM_MODE_OBJECT_CRTC);
 
 	list_add_tail(&crtc->head, &dev->mode_config.crtc_list, (caddr_t)&crtc);
@@ -521,7 +521,7 @@ void drm_connector_cleanup(struct drm_connector *connector)
 	struct drm_device *dev = connector->dev;
 	struct drm_display_mode *mode;
 	struct list_head *list, *t;
-	
+
 	list_for_each_safe(list, t, &connector->probed_modes) {
 		mode = list_entry(list, struct drm_display_mode, &connector->probed_modes);
 		drm_mode_remove(connector, mode);
@@ -621,17 +621,17 @@ static int drm_mode_create_standard_connector_properties(struct drm_device *dev)
 	/*
 	 * Standard properties (apply to all connectors)
 	 */
-	
+
 	edid = drm_property_create(dev, DRM_MODE_PROP_BLOB |
 				   DRM_MODE_PROP_IMMUTABLE,
 				   "EDID", 0);
 
 	dev->mode_config.edid_property = edid;
 
-	
+
 	dpms = drm_property_create(dev, DRM_MODE_PROP_ENUM,
 				   "DPMS", ARRAY_SIZE(drm_dpms_enum_list));
-	
+
 	for (i = 0; i < ARRAY_SIZE(drm_dpms_enum_list); i++)
 		drm_property_add_enum(dpms, i, drm_dpms_enum_list[i].type,
 				      drm_dpms_enum_list[i].name);
@@ -676,7 +676,7 @@ int drm_mode_create_dvi_i_properties(struct drm_device *dev)
 				      drm_dvi_i_subconnector_enum_list[i].type,
 				      drm_dvi_i_subconnector_enum_list[i].name);
 	dev->mode_config.dvi_i_subconnector_property = dvi_i_subconnector;
-	
+
 
 	return 0;
 }
@@ -706,7 +706,7 @@ int drm_mode_create_tv_properties(struct drm_device *dev, int num_modes,
 	/*
 	 * Basic connector properties
 	 */
-	
+
 	tv_selector = drm_property_create(dev, DRM_MODE_PROP_ENUM,
 					  "select subconnector",
 					  ARRAY_SIZE(drm_tv_select_enum_list));
@@ -864,7 +864,7 @@ int drm_mode_create_dirty_info_property(struct drm_device *dev)
 	if (dev->mode_config.dirty_info_property)
 		return 0;
 
-	
+
 	dirty_info =
 		drm_property_create(dev, DRM_MODE_PROP_ENUM |
 				    DRM_MODE_PROP_IMMUTABLE,
@@ -874,7 +874,7 @@ int drm_mode_create_dirty_info_property(struct drm_device *dev)
 		drm_property_add_enum(dirty_info, i,
 				      drm_dirty_info_enum_list[i].type,
 				      drm_dirty_info_enum_list[i].name);
-	
+
 	dev->mode_config.dirty_info_property = dirty_info;
 
 	return 0;
@@ -1014,7 +1014,7 @@ void drm_mode_config_cleanup(struct drm_device *dev)
 		crtc = list_entry(list, struct drm_crtc, &dev->mode_config.crtc_list);
 		crtc->funcs->destroy(crtc);
 	}
-	
+
 }
 
 /**
@@ -1129,10 +1129,10 @@ int drm_mode_getresources(struct drm_device *dev, void *data,
 	 * For the non-control nodes we need to limit the list of resources
 	 * by IDs in the group list for this node
 	 */
-	
+
 	list_for_each(lh, &file_priv->fbs)
 		fb_count++;
-	
+
 
 	mode_group = &file_priv->master->minor->mode_group;
 	if (file_priv->master->minor->type == DRM_MINOR_CONTROL) {
@@ -1291,7 +1291,7 @@ int drm_mode_getcrtc(struct drm_device *dev,
 		ret = -EINVAL;
 		goto out;
 	}
-        crtc = obj_to_crtc(obj);
+	crtc = obj_to_crtc(obj);
 
 	crtc_resp->x = crtc->x;
 	crtc_resp->y = crtc->y;
@@ -1964,13 +1964,13 @@ void drm_fb_release(struct drm_file *priv)
 	struct list_head *list, *t;
 
 	mutex_enter(&dev->mode_config.mutex);
-	
+
 	list_for_each_safe(list, t, &priv->fbs) {
 		fb = list_entry(list, struct drm_framebuffer, &priv->fbs);
 		list_del(&fb->filp_head);
 		fb->funcs->destroy(fb);
 	}
-	
+
 	mutex_exit(&dev->mode_config.mutex);
 }
 
@@ -2000,7 +2000,7 @@ int drm_mode_attachmode_crtc(struct drm_device *dev, struct drm_crtc *crtc,
 	int ret = 0;
 	struct drm_display_mode *dup_mode;
 	int need_dup = 0;
-	
+
 	list_for_each(list, &dev->mode_config.connector_list) {
 		connector = list_entry(list, struct drm_connector, &dev->mode_config.connector_list);
 		if (!connector->encoder)
@@ -2049,12 +2049,12 @@ int drm_mode_detachmode_crtc(struct drm_device *dev, struct drm_display_mode *mo
 {
 	struct drm_connector *connector;
 	struct list_head *list;
-	
+
 	list_for_each(list, &dev->mode_config.connector_list) {
 		connector = list_entry(list, struct drm_connector, &dev->mode_config.connector_list);
 		drm_mode_detachmode(dev, connector, mode);
 	}
-	
+
 	return 0;
 }
 
@@ -2215,7 +2215,7 @@ void drm_property_destroy(struct drm_device *dev, struct drm_property *property)
 {
 	struct drm_property_enum *prop_enum;
 	struct list_head *list, *t;
-	
+
 	list_for_each_safe(list, t, &property->enum_blob_list) {
 		prop_enum = list_entry(list, struct drm_property_enum, &property->enum_blob_list);
 		list_del(&prop_enum->head);
@@ -2457,10 +2457,9 @@ done:
 int drm_mode_connector_update_edid_property(struct drm_connector *connector,
 					    struct edid *edid)
 {
-	
 	struct drm_device *dev = connector->dev;
 	int ret = 0, size;
-	
+
 	if (connector->edid_blob_ptr)
 		drm_property_destroy_blob(dev, connector->edid_blob_ptr);
 
@@ -2627,21 +2626,21 @@ int drm_mode_gamma_set_ioctl(struct drm_device *dev,
 
 	size = crtc_lut->gamma_size * (sizeof(uint16_t));
 	r_base = crtc->gamma_store;
-	
+
 	if (copyin(r_base, (void __user *)(unsigned long)crtc_lut->red, size)) {
 		ret = -EFAULT;
 		goto out;
 	}
 
 	//g_base = r_base + size;
-	
+
 	if (copyin(g_base, (void __user *)(unsigned long)crtc_lut->green, size)) {
 		ret = -EFAULT;
 		goto out;
 	}
 
 	//b_base = g_base + size;
-	
+
 	if (copyin(b_base, (void __user *)(unsigned long)crtc_lut->blue, size)) {
 		ret = -EFAULT;
 		goto out;
@@ -2684,14 +2683,14 @@ int drm_mode_gamma_get_ioctl(struct drm_device *dev,
 
 	size = crtc_lut->gamma_size * (sizeof(uint16_t));
 	r_base = crtc->gamma_store;
-	
+
 	if (copyout((void __user *)(unsigned long)crtc_lut->red, r_base, size)) {
 		ret = -EFAULT;
 		goto out;
 	}
 
 	//g_base = r_base + size;
-	
+
 	if (copyout((void __user *)(unsigned long)crtc_lut->green, g_base, size)) {
 		ret = -EFAULT;
 		goto out;
