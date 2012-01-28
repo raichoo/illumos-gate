@@ -1917,10 +1917,10 @@ int drm_mode_dirtyfb_ioctl(struct drm_device *dev,
 			goto out_err1;
 		}
 
-		
+
 		ret = copyin(clips, clips_ptr,
 				     num_clips * sizeof(*clips));
-		
+
 		if (ret) {
 			ret = -EFAULT;
 			goto out_err2;
